@@ -81,4 +81,22 @@ public class GameBoard {
     public boolean isAnyColumnOccupiedBySamePlayer() {
         return isFirstColumnIsOccupiedBySamePlayer() || isSecondColumnOccupiedBySamePlayer() || isThirdColumnOccupiedBySamePlayer();
     }
+
+    public boolean isFirstDiagonalOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.ONE) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.ONE) == getPositionValueOnBoard(Position.FIVE) &&
+                    getPositionValueOnBoard(Position.FIVE) == getPositionValueOnBoard(Position.NINE));
+        }
+        return false;
+    }
+
+    public boolean isSecondDiagonalOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.THREE) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.THREE) == getPositionValueOnBoard(Position.FIVE) &&
+                    getPositionValueOnBoard(Position.FIVE) == getPositionValueOnBoard(Position.SEVEN));
+        }
+        return false;
+    }
 }

@@ -126,4 +126,27 @@ public class GameServiceTests {
 
         assertThat(gameService.playGame(Player.O, 9)).isEqualTo("Player O won the game");
     }
+
+    @Test
+    public void shouldDeclareWinnerIfAllPositionsInFirstDiagonalAreFilledBySamePlayer() {
+
+        gameService.playGame(Player.X, 1);
+        gameService.playGame(Player.O, 3);
+        gameService.playGame(Player.X, 5);
+        gameService.playGame(Player.O, 6);
+
+        assertThat(gameService.playGame(Player.X, 9)).isEqualTo("Player X won the game");
+    }
+
+    @Test
+    public void shouldDeclareWinnerIfAllPositionsInSecondDiagonalAreFilledBySamePlayer() {
+
+        gameService.playGame(Player.X, 1);
+        gameService.playGame(Player.O, 3);
+        gameService.playGame(Player.X, 6);
+        gameService.playGame(Player.O, 5);
+        gameService.playGame(Player.X, 2);
+
+        assertThat(gameService.playGame(Player.O, 7)).isEqualTo("Player O won the game");
+    }
 }
