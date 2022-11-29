@@ -58,4 +58,15 @@ public class GameServiceTests {
 
         assertThat(gameService.playGame(Player.O, 6)).isEqualTo("Input position 5 is already occupied");
     }
+
+    @Test
+    public void shouldDeclareWinnerIfAllPositionsInFirstRowAreFilledBySamePlayer() {
+
+        gameService.playGame(Player.X, 1);
+        gameService.playGame(Player.O, 4);
+        gameService.playGame(Player.X, 2);
+        gameService.playGame(Player.O, 5);
+
+        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Player X won the game");
+    }
 }
