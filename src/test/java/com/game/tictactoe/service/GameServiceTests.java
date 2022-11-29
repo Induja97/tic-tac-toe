@@ -171,4 +171,32 @@ public class GameServiceTests {
 
         assertThat(gameService.playGame(Player.X, 0)).isEqualTo("Input position 0 is invalid");
     }
+
+    @Test
+    public void gameShouldResetOnceWinnerIsIdentified() {
+
+        gameService.playGame(Player.X, 1);
+        gameService.playGame(Player.O, 4);
+        gameService.playGame(Player.X, 2);
+        gameService.playGame(Player.O, 5);
+
+        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Successful Move");
+    }
+
+    @Test
+    public void gameShouldResetIfPreviousGameIsATie() {
+
+        gameService.playGame(Player.X, 1);
+        gameService.playGame(Player.O, 3);
+        gameService.playGame(Player.X, 2);
+        gameService.playGame(Player.O, 5);
+        gameService.playGame(Player.X, 7);
+        gameService.playGame(Player.O, 8);
+        gameService.playGame(Player.X, 9);
+        gameService.playGame(Player.O, 4);
+
+        assertThat(gameService.playGame(Player.X, 6)).isEqualTo("Game is a Tie");
+        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Successful Move");
+    }
 }

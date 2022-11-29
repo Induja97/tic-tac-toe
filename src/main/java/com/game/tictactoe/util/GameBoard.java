@@ -9,7 +9,11 @@ public class GameBoard {
 
     public static final int TOTAL_POSITIONS_ON_BOARD = 9;
     private static final int EMPTY_POSITION_ON_BOARD = 0;
-    private final char[][] board = new char[3][3];
+    private char[][] board;
+
+    public void initialize() {
+        board = new char[3][3];
+    }
 
     public void setPositionOfPlayerOnBoard(Player player, Position position) {
 
