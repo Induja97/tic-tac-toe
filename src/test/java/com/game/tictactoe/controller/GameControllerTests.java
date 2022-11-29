@@ -1,35 +1,32 @@
-package com.game.tictactoe.controller;
+package com.game.tictactoe.service;
 
 import com.game.tictactoe.domain.Player;
-import com.game.tictactoe.service.GameService;
+import com.game.tictactoe.exception.InvalidTurnException;
+import com.game.tictactoe.util.GameBoard;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.mock.mockito.MockBean;
-import org.springframework.test.context.junit4.SpringRunner;
-import org.springframework.test.web.servlet.MockMvc;
+import org.mockito.junit.MockitoJUnitRunner;
 
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
+import static org.assertj.core.api.Assertions.assertThat;
 
-@WebMvcTest
-@RunWith(SpringRunner.class)
-public class GameControllerTests {
+@RunWith(MockitoJUnitRunner.class)
+public class GameServiceTests {
 
-    @Autowired
-    private MockMvc mvc;
+    @Test(expected = InvalidTurnException.class)
+    public void shouldThrowInvalidTurnException() throws InvalidTurnException {
 
-    @MockBean
-    private GameService gameService;
+        GameBoard gameBoard = new GameBoard();
+        GameService gameService = new GameService(gameBoard);
+
+        assertThat(gameService.playGame(Player.O, 1)).isEqualTo("Player X should move first");
+    }
 
     @Test
-    public void playGameHandler_APIFound() throws Exception {
+    public void savePositionOnBoard() throws InvalidTurnException {
 
-        when(gameService.playGame(Player.X, 0, 0)).thenReturn("Successful Move");
+        GameBoard gameBoard = new GameBoard();
+        GameService gameService = new GameService(gameBoard);
 
-        mvc.perform(post("/tic-tac-toe/play/{player}/{row}/{column}", Player.X, 0, 0))
-                .andExpect(status().isOk());
+        assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Successful Move");
     }
 }

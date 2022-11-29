@@ -17,11 +17,10 @@ public class GameController {
         this.gameService = gameService;
     }
 
-    @PostMapping(path = "/tic-tac-toe/play/{player}/{row}/{column}")
+    @PostMapping(path = "/tic-tac-toe/play/{player}/{position}")
     public ResponseEntity<String> playGameHandler(@PathVariable Player player,
-                                                  @PathVariable int row,
-                                                  @PathVariable int column) {
+                                                  @PathVariable int position) {
 
-        return ResponseEntity.status(HttpStatus.OK).body(gameService.playGame(player, row, column));
+        return ResponseEntity.status(HttpStatus.OK).body(gameService.playGame(player, position));
     }
 }

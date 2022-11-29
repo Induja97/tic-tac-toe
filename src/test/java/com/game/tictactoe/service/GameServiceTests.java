@@ -18,14 +18,15 @@ public class GameServiceTests {
         GameBoard gameBoard = new GameBoard();
         GameService gameService = new GameService(gameBoard);
 
-        assertThat(gameService.playGame(Player.O, 0, 0)).isEqualTo("Player X should move first");
+        assertThat(gameService.playGame(Player.O, 1)).isEqualTo("Player X should move first");
     }
 
+    @Test
     public void savePositionOnBoard() throws InvalidTurnException {
 
         GameBoard gameBoard = new GameBoard();
         GameService gameService = new GameService(gameBoard);
 
-        assertThat(gameService.playGame(Player.X, 0, 0)).isEqualTo("Successful Move");
+        assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Successful Move");
     }
 }
