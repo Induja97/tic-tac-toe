@@ -21,24 +21,24 @@ public class GameService {
     public String playGame(Player player, int position) {
 
         String message = "Successful Move";
-        if (isFirstTurn() && isPlayerO(player)) {
-            message = "Player X should move first";
-            throw new InvalidTurnException(message);
-        }
-        if (isAlternatePlayerPlaying(player)) {
-            message = String.format("Player %s's turn now", player.getValue());
-            throw new InvalidTurnException(message);
-        } else if (gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0) {
-            message = String.format("Input position %s is already occupied", position);
-            throw new PositionAlreadyOccupiedException(message);
-        } else {
-            previousPlayer = player.getValue();
-            gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
-        }
+        validateCurrentTurn(player, position);
+        previousPlayer = player.getValue();
+        gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
         return message;
     }
 
-    private boolean isAlternatePlayerPlaying(Player player) {
+    private void validateCurrentTurn(Player player, int position) {
+
+        if (isFirstTurn() && isPlayerO(player)) {
+            throw new InvalidTurnException("Player X should move first");
+        } else if (isNotAlternatePlayerPlaying(player)) {
+            throw new InvalidTurnException(String.format("Player %s's turn now", player.getValue()));
+        } else if (gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0) {
+            throw new PositionAlreadyOccupiedException(String.format("Input position %s is already occupied", position));
+        }
+    }
+
+    private boolean isNotAlternatePlayerPlaying(Player player) {
         return player.getValue() == previousPlayer;
     }
 
