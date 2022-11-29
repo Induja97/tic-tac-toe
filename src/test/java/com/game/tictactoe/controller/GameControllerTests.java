@@ -29,7 +29,11 @@ public class GameControllerTests {
     @Test
     public void playGameHandler_APIFound() throws Exception {
 
-        when(gameService.playGame(Player.X, 1)).thenReturn(new GameResponse(Player.X, Player.O, "GAME_IN_PROGRESS"));
+        when(gameService.playGame(Player.X, 1)).thenReturn(new GameResponse.GameResponseBuilder()
+                .withCurrentPlayer(Player.X)
+                .withNextPlayer(Player.O)
+                .withStatus("GAME_IN_PROGRESS")
+                .build());
 
         mvc.perform(post("/tic-tac-toe/play/{player}/{position}", Player.X, 1))
                 .andExpect(status().isOk());

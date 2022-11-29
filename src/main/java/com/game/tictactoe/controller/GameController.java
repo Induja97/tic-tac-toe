@@ -28,9 +28,10 @@ public class GameController {
     @ApiResponses(value = {
             @ApiResponse(responseCode = "200", description = "Successfully played the Turn",
                     content = {@Content(mediaType = "application/json",
-                            schema = @Schema(implementation = String.class))}),
+                            schema = @Schema(implementation = GameResponse.class))}),
             @ApiResponse(responseCode = "409", description = "Invalid Position parameter",
-                    content = @Content)})
+                    content = {@Content(mediaType = "application/json",
+                            schema = @Schema(implementation = GameResponse.class))})})
     @PostMapping(path = "/tic-tac-toe/play/{player}/{position}")
     public ResponseEntity<GameResponse> playGameHandler(@PathVariable Player player,
                                                         @PathVariable int position) {

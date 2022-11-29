@@ -40,12 +40,19 @@ public class GameService {
 
         if (gameBoard.isBoardFull()) {
             resetGame();
-            return new GameResponse("GAME_OVER", "Game is a Tie");
+            return new GameResponse.GameResponseBuilder().withStatus("GAME_OVER")
+                    .withResult("Game is a Tie")
+                    .build();
         } else if (isGameOver()) {
             resetGame();
-            return new GameResponse("GAME_OVER", String.format("Player %s won the game", player.getValue()));
+            return new GameResponse.GameResponseBuilder().withStatus("GAME_OVER")
+                    .withResult(String.format("Player %s won the game", player.getValue()))
+                    .build();
         }
-        return new GameResponse(player, getNextPlayer(player), "GAME_IN_PROGRESS");
+        return new GameResponse.GameResponseBuilder().withCurrentPlayer(player)
+                .withNextPlayer(getNextPlayer(player))
+                .withStatus("GAME_IN_PROGRESS")
+                .build();
     }
 
     private void resetGame() {
