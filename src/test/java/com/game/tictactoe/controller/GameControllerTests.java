@@ -1,32 +1,45 @@
-package com.game.tictactoe.service;
+package com.game.tictactoe.controller;
 
 import com.game.tictactoe.domain.Player;
-import com.game.tictactoe.exception.InvalidTurnException;
-import com.game.tictactoe.util.GameBoard;
+import com.game.tictactoe.service.GameService;
 import org.junit.Test;
 import org.junit.runner.RunWith;
-import org.mockito.junit.MockitoJUnitRunner;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
+import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.test.context.junit4.SpringRunner;
+import org.springframework.test.web.servlet.MockMvc;
 
-import static org.assertj.core.api.Assertions.assertThat;
+import static org.mockito.Mockito.when;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.put;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@RunWith(MockitoJUnitRunner.class)
-public class GameServiceTests {
+@WebMvcTest
+@RunWith(SpringRunner.class)
+public class GameControllerTests {
 
-    @Test(expected = InvalidTurnException.class)
-    public void shouldThrowInvalidTurnException() throws InvalidTurnException {
+    @Autowired
+    private MockMvc mvc;
 
-        GameBoard gameBoard = new GameBoard();
-        GameService gameService = new GameService(gameBoard);
+    @MockBean
+    private GameService gameService;
 
-        assertThat(gameService.playGame(Player.O, 1)).isEqualTo("Player X should move first");
+    @Test
+    public void playGameHandler_APIFound() throws Exception {
+
+        when(gameService.playGame(Player.X, 1)).thenReturn("Successful Move");
+
+        mvc.perform(post("/tic-tac-toe/play/{player}/{position}", Player.X, 1))
+                .andExpect(status().isOk());
     }
 
     @Test
-    public void savePositionOnBoard() throws InvalidTurnException {
+    public void resetGameHandler_APIFound() throws Exception {
 
-        GameBoard gameBoard = new GameBoard();
-        GameService gameService = new GameService(gameBoard);
+        when(gameService.resetGameState()).thenReturn("Reset successful");
 
-        assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Successful Move");
+        mvc.perform(put("/tic-tac-toe/reset-game"))
+                .andExpect(status().isOk());
     }
 }
