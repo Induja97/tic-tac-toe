@@ -23,11 +23,15 @@ public class GameService {
         String message = "Successful Move";
         validateCurrentTurn(player, position);
         saveCurrentTurn(player, position);
-        if (gameBoard.isAnyRowOccupiedBySamePlayer() || gameBoard.isAnyColumnOccupiedBySamePlayer()
-                || gameBoard.isAnyDiagonalOccupiedBySamePlayer()) {
+        if (isGameOver()) {
             return String.format("Player %s won the game", player.getValue());
         }
         return message;
+    }
+
+    private boolean isGameOver() {
+        return gameBoard.isAnyRowOccupiedBySamePlayer() || gameBoard.isAnyColumnOccupiedBySamePlayer()
+                || gameBoard.isAnyDiagonalOccupiedBySamePlayer();
     }
 
     private void saveCurrentTurn(Player player, int position) {
