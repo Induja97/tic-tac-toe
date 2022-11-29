@@ -20,11 +20,16 @@ public class GameService {
     public String playGame(Player player, int position) {
 
         String message = "Successful Move";
-        if (isFirstTurn() && isFirstPlayerO(player)) {
+        if (isFirstTurn() && isPlayerO(player)) {
             message = "Player X should move first";
             throw new InvalidTurnException(message);
         }
-        gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
+        if (player.getValue() == previousPlayer) {
+            message = String.format("Player %s's turn now", player.getValue());
+        } else {
+            previousPlayer = player.getValue();
+            gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
+        }
         return message;
     }
 
@@ -32,7 +37,7 @@ public class GameService {
         return previousPlayer == INITIAL_PLAYER_VALUE;
     }
 
-    private boolean isFirstPlayerO(Player player) {
+    private boolean isPlayerO(Player player) {
         return player == Player.O;
     }
 }
