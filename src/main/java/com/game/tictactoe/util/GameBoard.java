@@ -19,7 +19,7 @@ public class GameBoard {
         return board[position.getRow()][position.getColumn()];
     }
 
-    public boolean isFirstRowIsOccupiedBySamePlayer() {
+    private boolean isFirstRowIsOccupiedBySamePlayer() {
 
         if (getPositionValueOnBoard(Position.ONE) != EMPTY_POSITION_ON_BOARD) {
             return (getPositionValueOnBoard(Position.ONE) == getPositionValueOnBoard(Position.TWO) &&
@@ -28,7 +28,7 @@ public class GameBoard {
         return false;
     }
 
-    public boolean isSecondRowIsOccupiedBySamePlayer() {
+    private boolean isSecondRowIsOccupiedBySamePlayer() {
 
         if (getPositionValueOnBoard(Position.FOUR) != EMPTY_POSITION_ON_BOARD) {
             return (getPositionValueOnBoard(Position.FOUR) == getPositionValueOnBoard(Position.FIVE) &&
@@ -37,12 +37,17 @@ public class GameBoard {
         return false;
     }
 
-    public boolean isThirdRowIsOccupiedBySamePlayer() {
+    private boolean isThirdRowIsOccupiedBySamePlayer() {
 
         if (getPositionValueOnBoard(Position.SEVEN) != EMPTY_POSITION_ON_BOARD) {
             return (getPositionValueOnBoard(Position.SEVEN) == getPositionValueOnBoard(Position.EIGHT) &&
                     getPositionValueOnBoard(Position.EIGHT) == getPositionValueOnBoard(Position.NINE));
         }
         return false;
+    }
+
+    public boolean isAnyRowOccupiedBySamePlayer() {
+
+        return isFirstRowIsOccupiedBySamePlayer() || isSecondRowIsOccupiedBySamePlayer() || isThirdRowIsOccupiedBySamePlayer();
     }
 }
