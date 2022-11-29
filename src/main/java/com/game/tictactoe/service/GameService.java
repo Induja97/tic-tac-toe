@@ -2,6 +2,7 @@ package com.game.tictactoe.service;
 
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.domain.Position;
+import com.game.tictactoe.exception.InvalidPositionException;
 import com.game.tictactoe.exception.InvalidTurnException;
 import com.game.tictactoe.exception.PositionAlreadyOccupiedException;
 import com.game.tictactoe.util.GameBoard;
@@ -48,7 +49,9 @@ public class GameService {
 
     private void validateCurrentTurn(Player player, int position) {
 
-        if (isFirstTurn() && isPlayerO(player)) {
+        if (Position.getRowColumnValueOfPosition(position) == Position.DEFAULT) {
+            throw new InvalidPositionException(String.format("Input %s position is invalid", position));
+        } else if (isFirstTurn() && isPlayerO(player)) {
             throw new InvalidTurnException("Player X should move first");
         } else if (isNotAlternatePlayerPlaying(player)) {
             throw new InvalidTurnException(String.format("Player %s's turn now", player.getValue()));

@@ -1,6 +1,7 @@
 package com.game.tictactoe.service;
 
 import com.game.tictactoe.domain.Player;
+import com.game.tictactoe.exception.InvalidPositionException;
 import com.game.tictactoe.exception.InvalidTurnException;
 import com.game.tictactoe.exception.PositionAlreadyOccupiedException;
 import com.game.tictactoe.util.GameBoard;
@@ -163,5 +164,11 @@ public class GameServiceTests {
         gameService.playGame(Player.O, 4);
 
         assertThat(gameService.playGame(Player.X, 6)).isEqualTo("Game is a Tie");
+    }
+
+    @Test(expected = InvalidPositionException.class)
+    public void shouldThrowInvalidPositionException() {
+
+        assertThat(gameService.playGame(Player.X, 0)).isEqualTo("Input position 0 is invalid");
     }
 }
