@@ -4,6 +4,9 @@ import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.domain.Position;
 import org.springframework.stereotype.Component;
 
+import java.nio.CharBuffer;
+import java.util.Arrays;
+
 @Component
 public class GameBoard {
 
@@ -30,15 +33,11 @@ public class GameBoard {
 
     private int getCountOfPositionsOccupied() {
 
-        int positionsOccupied = EMPTY_POSITION_ON_BOARD;
-        for (char[] row : board) {
-            for (int column = EMPTY_POSITION_ON_BOARD; column < board.length; column++) {
-                if (row[column] != EMPTY_POSITION_ON_BOARD) {
-                    positionsOccupied++;
-                }
-            }
-        }
-        return positionsOccupied;
+        return (int) Arrays.stream(board)
+                .map(CharBuffer::wrap)
+                .flatMapToInt(CharBuffer::chars)
+                .filter(position -> position != EMPTY_POSITION_ON_BOARD)
+                .count();
     }
 
     private boolean isFirstRowOccupiedBySamePlayer() {

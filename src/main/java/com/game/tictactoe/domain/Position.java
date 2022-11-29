@@ -1,5 +1,7 @@
 package com.game.tictactoe.domain;
 
+import java.util.Arrays;
+
 public enum Position {
 
     ONE(1, 0, 0),
@@ -24,12 +26,10 @@ public enum Position {
 
     public static Position getRowColumnValueOfPosition(int position) {
 
-        for (Position iteration : Position.values()) {
-            if (iteration.getValue() == position) {
-                return iteration;
-            }
-        }
-        return Position.DEFAULT;
+        return Arrays.stream(Position.values())
+                .filter(p -> p.getValue() == position)
+                .findAny()
+                .orElse(Position.DEFAULT);
     }
 
     public int getValue() {
