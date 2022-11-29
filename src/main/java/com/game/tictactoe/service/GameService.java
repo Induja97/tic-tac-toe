@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 public class GameService {
 
     private final GameBoard gameBoard;
+    private char previousPlayer;
 
     public GameService(GameBoard gameBoard) {
         this.gameBoard = gameBoard;
@@ -16,14 +17,16 @@ public class GameService {
 
     public String playGame(Player player, int row, int column) {
 
-        String message = null;
-        if (player == Player.X) {
-            message = "Successful Move";
-        } else if (player == Player.O) {
+        String message = "Successful Move";
+        if (previousPlayer == 0 && isFirstPlayerO(player)) {
             message = "Player X should move first";
             throw new InvalidTurnException(message);
         }
         gameBoard.setPositionOfPlayerOnBoard(player, row, column);
         return message;
+    }
+
+    private boolean isFirstPlayerO(Player player) {
+        return player == Player.O;
     }
 }
