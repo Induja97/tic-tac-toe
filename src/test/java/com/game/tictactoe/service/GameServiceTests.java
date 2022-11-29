@@ -39,4 +39,14 @@ public class GameServiceTests {
 
         assertThat(gameService.playGame(Player.O, 1)).isEqualTo("Successful Move");
     }
+
+    @Test(expected = InvalidTurnException.class)
+    public void shouldThrowInvalidTurnExceptionWhenAlternatePlayerIsNotPlaying() {
+
+        GameBoard gameBoard = new GameBoard();
+        GameService gameService = new GameService(gameBoard);
+        gameService.playGame(Player.X, 2);
+
+        assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Player O's turn now");
+    }
 }

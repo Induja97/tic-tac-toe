@@ -26,6 +26,7 @@ public class GameService {
         }
         if (player.getValue() == previousPlayer) {
             message = String.format("Player %s's turn now", player.getValue());
+            throw new InvalidTurnException(message);
         } else {
             previousPlayer = player.getValue();
             gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
