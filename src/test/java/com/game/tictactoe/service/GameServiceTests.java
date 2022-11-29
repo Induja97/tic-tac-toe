@@ -49,4 +49,12 @@ public class GameServiceTests {
 
         assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Player O's turn now");
     }
+
+    @Test
+    public void playerShouldPlayOnEmptyPosition() {
+
+        gameService.playGame(Player.X, 5);
+
+        assertThat(gameService.playGame(Player.O, 5)).isEqualTo("Input position 5 is already occupied");
+    }
 }

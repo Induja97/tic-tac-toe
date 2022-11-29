@@ -27,6 +27,8 @@ public class GameService {
         if (isAlternatePlayerPlaying(player)) {
             message = String.format("Player %s's turn now", player.getValue());
             throw new InvalidTurnException(message);
+        } else if (gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0) {
+            message = String.format("Input position %s is already occupied", position);
         } else {
             previousPlayer = player.getValue();
             gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));

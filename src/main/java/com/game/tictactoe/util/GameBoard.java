@@ -13,4 +13,8 @@ public class GameBoard {
 
         board[position.getRow()][position.getColumn()] = player.getValue();
     }
+
+    public char getPositionValueOnBoard(Position position) {
+        return board[position.getRow()][position.getColumn()];
+    }
 }
