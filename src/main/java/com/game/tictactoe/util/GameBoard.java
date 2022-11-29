@@ -50,4 +50,31 @@ public class GameBoard {
 
         return isFirstRowIsOccupiedBySamePlayer() || isSecondRowIsOccupiedBySamePlayer() || isThirdRowIsOccupiedBySamePlayer();
     }
+
+    public boolean isFirstColumnIsOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.ONE) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.ONE) == getPositionValueOnBoard(Position.FOUR) &&
+                    getPositionValueOnBoard(Position.FOUR) == getPositionValueOnBoard(Position.SEVEN));
+        }
+        return false;
+    }
+
+    public boolean isSecondColumnOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.TWO) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.TWO) == getPositionValueOnBoard(Position.FIVE) &&
+                    getPositionValueOnBoard(Position.FIVE) == getPositionValueOnBoard(Position.EIGHT));
+        }
+        return false;
+    }
+
+    public boolean isThirdColumnOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.THREE) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.THREE) == getPositionValueOnBoard(Position.SIX) &&
+                    getPositionValueOnBoard(Position.SIX) == getPositionValueOnBoard(Position.NINE));
+        }
+        return false;
+    }
 }
