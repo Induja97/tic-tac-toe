@@ -1,5 +1,6 @@
 package com.game.tictactoe.controller;
 
+import com.game.tictactoe.domain.GameResponse;
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.service.GameService;
 import org.junit.Test;
@@ -28,7 +29,7 @@ public class GameControllerTests {
     @Test
     public void playGameHandler_APIFound() throws Exception {
 
-        when(gameService.playGame(Player.X, 1)).thenReturn("Successful Move");
+        when(gameService.playGame(Player.X, 1)).thenReturn(new GameResponse(Player.X, Player.O, "GAME_IN_PROGRESS"));
 
         mvc.perform(post("/tic-tac-toe/play/{player}/{position}", Player.X, 1))
                 .andExpect(status().isOk());

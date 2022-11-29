@@ -27,13 +27,13 @@ public class GameServiceTests {
     @Test(expected = InvalidTurnException.class)
     public void shouldThrowInvalidTurnException() throws InvalidTurnException {
 
-        assertThat(gameService.playGame(Player.O, 1)).isEqualTo("Player X should move first");
+        gameService.playGame(Player.O, 1);
     }
 
     @Test
     public void savePositionOnBoard() {
 
-        assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Successful Move");
+        assertThat(gameService.playGame(Player.X, 1).getStatus()).isEqualTo("GAME_IN_PROGRESS");
     }
 
     @Test
@@ -41,23 +41,21 @@ public class GameServiceTests {
 
         gameService.playGame(Player.X, 2);
 
-        assertThat(gameService.playGame(Player.O, 1)).isEqualTo("Successful Move");
+        assertThat(gameService.playGame(Player.O, 1).getStatus()).isEqualTo("GAME_IN_PROGRESS");
     }
 
     @Test(expected = InvalidTurnException.class)
     public void shouldThrowInvalidTurnExceptionWhenAlternatePlayerIsNotPlaying() {
 
         gameService.playGame(Player.X, 2);
-
-        assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Player O's turn now");
+        gameService.playGame(Player.X, 1);
     }
 
     @Test(expected = PositionAlreadyOccupiedException.class)
     public void shouldThrowPositionAlreadyOccupiedException() {
 
         gameService.playGame(Player.X, 6);
-
-        assertThat(gameService.playGame(Player.O, 6)).isEqualTo("Input position 5 is already occupied");
+        gameService.playGame(Player.O, 6);
     }
 
     @Test
@@ -68,7 +66,7 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 2);
         gameService.playGame(Player.O, 5);
 
-        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 3).getResult()).isEqualTo("Player X won the game");
     }
 
     @Test
@@ -80,7 +78,7 @@ public class GameServiceTests {
         gameService.playGame(Player.O, 5);
         gameService.playGame(Player.X, 7);
 
-        assertThat(gameService.playGame(Player.O, 6)).isEqualTo("Player O won the game");
+        assertThat(gameService.playGame(Player.O, 6).getResult()).isEqualTo("Player O won the game");
     }
 
     @Test
@@ -91,7 +89,7 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 8);
         gameService.playGame(Player.O, 5);
 
-        assertThat(gameService.playGame(Player.X, 9)).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 9).getResult()).isEqualTo("Player X won the game");
     }
 
     @Test
@@ -102,7 +100,7 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 4);
         gameService.playGame(Player.O, 5);
 
-        assertThat(gameService.playGame(Player.X, 7)).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 7).getResult()).isEqualTo("Player X won the game");
     }
 
     @Test
@@ -113,7 +111,7 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 5);
         gameService.playGame(Player.O, 1);
 
-        assertThat(gameService.playGame(Player.X, 8)).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 8).getResult()).isEqualTo("Player X won the game");
     }
 
     @Test
@@ -125,7 +123,7 @@ public class GameServiceTests {
         gameService.playGame(Player.O, 6);
         gameService.playGame(Player.X, 1);
 
-        assertThat(gameService.playGame(Player.O, 9)).isEqualTo("Player O won the game");
+        assertThat(gameService.playGame(Player.O, 9).getResult()).isEqualTo("Player O won the game");
     }
 
     @Test
@@ -136,7 +134,7 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 5);
         gameService.playGame(Player.O, 6);
 
-        assertThat(gameService.playGame(Player.X, 9)).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 9).getResult()).isEqualTo("Player X won the game");
     }
 
     @Test
@@ -148,7 +146,7 @@ public class GameServiceTests {
         gameService.playGame(Player.O, 5);
         gameService.playGame(Player.X, 2);
 
-        assertThat(gameService.playGame(Player.O, 7)).isEqualTo("Player O won the game");
+        assertThat(gameService.playGame(Player.O, 7).getResult()).isEqualTo("Player O won the game");
     }
 
     @Test
@@ -163,13 +161,13 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 9);
         gameService.playGame(Player.O, 4);
 
-        assertThat(gameService.playGame(Player.X, 6)).isEqualTo("Game is a Tie");
+        assertThat(gameService.playGame(Player.X, 6).getResult()).isEqualTo("Game is a Tie");
     }
 
     @Test(expected = InvalidPositionException.class)
     public void shouldThrowInvalidPositionException() {
 
-        assertThat(gameService.playGame(Player.X, 0)).isEqualTo("Input position 0 is invalid");
+        gameService.playGame(Player.X, 0);
     }
 
     @Test
@@ -180,8 +178,8 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 2);
         gameService.playGame(Player.O, 5);
 
-        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Player X won the game");
-        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Successful Move");
+        assertThat(gameService.playGame(Player.X, 3).getResult()).isEqualTo("Player X won the game");
+        assertThat(gameService.playGame(Player.X, 3).getStatus()).isEqualTo("GAME_IN_PROGRESS");
     }
 
     @Test
@@ -196,7 +194,7 @@ public class GameServiceTests {
         gameService.playGame(Player.X, 9);
         gameService.playGame(Player.O, 4);
 
-        assertThat(gameService.playGame(Player.X, 6)).isEqualTo("Game is a Tie");
-        assertThat(gameService.playGame(Player.X, 3)).isEqualTo("Successful Move");
+        assertThat(gameService.playGame(Player.X, 6).getResult()).isEqualTo("Game is a Tie");
+        assertThat(gameService.playGame(Player.X, 3).getStatus()).isEqualTo("GAME_IN_PROGRESS");
     }
 }

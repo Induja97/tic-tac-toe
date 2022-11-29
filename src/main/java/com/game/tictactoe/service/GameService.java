@@ -1,5 +1,6 @@
 package com.game.tictactoe.service;
 
+import com.game.tictactoe.domain.GameResponse;
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.domain.Position;
 import com.game.tictactoe.exception.InvalidPositionException;
@@ -25,7 +26,7 @@ public class GameService {
         return "Reset successful";
     }
 
-    public String playGame(Player player, int position) {
+    public GameResponse playGame(Player player, int position) {
 
         if (isFirstTurn()) {
             gameBoard.initialize();
@@ -35,16 +36,16 @@ public class GameService {
         return validateGameAndSendResponse(player);
     }
 
-    private String validateGameAndSendResponse(Player player) {
+    private GameResponse validateGameAndSendResponse(Player player) {
 
         if (gameBoard.isBoardFull()) {
             resetGame();
-            return "Game is a Tie";
+            return new GameResponse("GAME_OVER", "Game is a Tie");
         } else if (isGameOver()) {
             resetGame();
-            return String.format("Player %s won the game", player.getValue());
+            return new GameResponse("GAME_OVER", String.format("Player %s won the game", player.getValue()));
         }
-        return "Successful Move";
+        return new GameResponse(player, getNextPlayer(player), "GAME_IN_PROGRESS");
     }
 
     private void resetGame() {
@@ -76,8 +77,8 @@ public class GameService {
         }
     }
 
-    private Character getNextPlayer(Player player) {
-        return player == Player.X ? Player.O.getValue() : Player.X.getValue();
+    private Player getNextPlayer(Player player) {
+        return player == Player.X ? Player.O : Player.X;
     }
 
     private boolean isPositionOccupied(int position) {

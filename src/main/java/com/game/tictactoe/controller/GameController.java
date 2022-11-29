@@ -1,5 +1,6 @@
 package com.game.tictactoe.controller;
 
+import com.game.tictactoe.domain.GameResponse;
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.service.GameService;
 import io.swagger.v3.oas.annotations.Operation;
@@ -31,8 +32,8 @@ public class GameController {
             @ApiResponse(responseCode = "409", description = "Invalid Position parameter",
                     content = @Content)})
     @PostMapping(path = "/tic-tac-toe/play/{player}/{position}")
-    public ResponseEntity<String> playGameHandler(@PathVariable Player player,
-                                                  @PathVariable int position) {
+    public ResponseEntity<GameResponse> playGameHandler(@PathVariable Player player,
+                                                        @PathVariable int position) {
 
         return ResponseEntity.status(HttpStatus.OK).body(gameService.playGame(player, position));
     }
