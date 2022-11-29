@@ -10,7 +10,7 @@ import org.springframework.stereotype.Service;
 @Service
 public class GameService {
 
-    private static final int INITIAL_PLAYER_VALUE = 0;
+    private static final int INITIAL_VALUE = 0;
     private final GameBoard gameBoard;
     private char previousPlayer;
 
@@ -22,9 +22,14 @@ public class GameService {
 
         String message = "Successful Move";
         validateCurrentTurn(player, position);
+        saveCurrentTurn(player, position);
+        return message;
+    }
+
+    private void saveCurrentTurn(Player player, int position) {
+
         previousPlayer = player.getValue();
         gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));
-        return message;
     }
 
     private void validateCurrentTurn(Player player, int position) {
@@ -33,9 +38,13 @@ public class GameService {
             throw new InvalidTurnException("Player X should move first");
         } else if (isNotAlternatePlayerPlaying(player)) {
             throw new InvalidTurnException(String.format("Player %s's turn now", player.getValue()));
-        } else if (gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0) {
+        } else if (isPositionOccupied(position)) {
             throw new PositionAlreadyOccupiedException(String.format("Input position %s is already occupied", position));
         }
+    }
+
+    private boolean isPositionOccupied(int position) {
+        return gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != INITIAL_VALUE;
     }
 
     private boolean isNotAlternatePlayerPlaying(Player player) {
@@ -43,7 +52,7 @@ public class GameService {
     }
 
     private boolean isFirstTurn() {
-        return previousPlayer == INITIAL_PLAYER_VALUE;
+        return previousPlayer == INITIAL_VALUE;
     }
 
     private boolean isPlayerO(Player player) {
