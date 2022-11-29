@@ -27,4 +27,22 @@ public class GameBoard {
         }
         return false;
     }
+
+    public boolean isSecondRowIsOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.FOUR) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.FOUR) == getPositionValueOnBoard(Position.FIVE) &&
+                    getPositionValueOnBoard(Position.FIVE) == getPositionValueOnBoard(Position.SIX));
+        }
+        return false;
+    }
+
+    public boolean isThirdRowIsOccupiedBySamePlayer() {
+
+        if (getPositionValueOnBoard(Position.SEVEN) != EMPTY_POSITION_ON_BOARD) {
+            return (getPositionValueOnBoard(Position.SEVEN) == getPositionValueOnBoard(Position.EIGHT) &&
+                    getPositionValueOnBoard(Position.EIGHT) == getPositionValueOnBoard(Position.NINE));
+        }
+        return false;
+    }
 }
