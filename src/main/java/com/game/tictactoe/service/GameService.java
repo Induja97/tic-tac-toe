@@ -3,6 +3,7 @@ package com.game.tictactoe.service;
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.domain.Position;
 import com.game.tictactoe.exception.InvalidTurnException;
+import com.game.tictactoe.exception.PositionAlreadyOccupiedException;
 import com.game.tictactoe.util.GameBoard;
 import org.springframework.stereotype.Service;
 
@@ -29,6 +30,7 @@ public class GameService {
             throw new InvalidTurnException(message);
         } else if (gameBoard.getPositionValueOnBoard(Position.getRowColumnValueOfPosition(position)) != 0) {
             message = String.format("Input position %s is already occupied", position);
+            throw new PositionAlreadyOccupiedException(message);
         } else {
             previousPlayer = player.getValue();
             gameBoard.setPositionOfPlayerOnBoard(player, Position.getRowColumnValueOfPosition(position));

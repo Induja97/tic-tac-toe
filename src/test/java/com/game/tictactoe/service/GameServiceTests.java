@@ -2,6 +2,7 @@ package com.game.tictactoe.service;
 
 import com.game.tictactoe.domain.Player;
 import com.game.tictactoe.exception.InvalidTurnException;
+import com.game.tictactoe.exception.PositionAlreadyOccupiedException;
 import com.game.tictactoe.util.GameBoard;
 import org.junit.Before;
 import org.junit.Test;
@@ -50,11 +51,11 @@ public class GameServiceTests {
         assertThat(gameService.playGame(Player.X, 1)).isEqualTo("Player O's turn now");
     }
 
-    @Test
-    public void playerShouldPlayOnEmptyPosition() {
+    @Test(expected = PositionAlreadyOccupiedException.class)
+    public void shouldThrowPositionAlreadyOccupiedException() {
 
-        gameService.playGame(Player.X, 5);
+        gameService.playGame(Player.X, 6);
 
-        assertThat(gameService.playGame(Player.O, 5)).isEqualTo("Input position 5 is already occupied");
+        assertThat(gameService.playGame(Player.O, 6)).isEqualTo("Input position 5 is already occupied");
     }
 }
