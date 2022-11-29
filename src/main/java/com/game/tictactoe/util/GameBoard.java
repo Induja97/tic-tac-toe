@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 @Component
 public class GameBoard {
 
+    public static final int TOTAL_POSITIONS_ON_BOARD = 9;
     private static final int EMPTY_POSITION_ON_BOARD = 0;
     private final char[][] board = new char[3][3];
 
@@ -17,6 +18,23 @@ public class GameBoard {
 
     public char getPositionValueOnBoard(Position position) {
         return board[position.getRow()][position.getColumn()];
+    }
+
+    public boolean isBoardFull() {
+        return getCountOfPositionsOccupied() == TOTAL_POSITIONS_ON_BOARD;
+    }
+
+    private int getCountOfPositionsOccupied() {
+
+        int positionsOccupied = EMPTY_POSITION_ON_BOARD;
+        for (char[] row : board) {
+            for (int column = EMPTY_POSITION_ON_BOARD; column < board.length; column++) {
+                if (row[column] != EMPTY_POSITION_ON_BOARD) {
+                    positionsOccupied++;
+                }
+            }
+        }
+        return positionsOccupied;
     }
 
     private boolean isFirstRowIsOccupiedBySamePlayer() {

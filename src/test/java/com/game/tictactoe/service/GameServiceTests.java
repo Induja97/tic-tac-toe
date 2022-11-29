@@ -149,4 +149,19 @@ public class GameServiceTests {
 
         assertThat(gameService.playGame(Player.O, 7)).isEqualTo("Player O won the game");
     }
+
+    @Test
+    public void shouldDeclareGameAsTieIfAllPositionsAreFilled() {
+
+        gameService.playGame(Player.X, 1);
+        gameService.playGame(Player.O, 3);
+        gameService.playGame(Player.X, 2);
+        gameService.playGame(Player.O, 5);
+        gameService.playGame(Player.X, 7);
+        gameService.playGame(Player.O, 8);
+        gameService.playGame(Player.X, 9);
+        gameService.playGame(Player.O, 4);
+
+        assertThat(gameService.playGame(Player.X, 6)).isEqualTo("Game is a Tie");
+    }
 }

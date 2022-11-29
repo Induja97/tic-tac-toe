@@ -20,13 +20,19 @@ public class GameService {
 
     public String playGame(Player player, int position) {
 
-        String message = "Successful Move";
         validateCurrentTurn(player, position);
         saveCurrentTurn(player, position);
-        if (isGameOver()) {
+        return validateGameAndSendResponse(player);
+    }
+
+    private String validateGameAndSendResponse(Player player) {
+
+        if (gameBoard.isBoardFull()) {
+            return "Game is a Tie";
+        } else if (isGameOver()) {
             return String.format("Player %s won the game", player.getValue());
         }
-        return message;
+        return "Successful Move";
     }
 
     private boolean isGameOver() {
