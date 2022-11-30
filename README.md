@@ -25,7 +25,7 @@ Develop a simple tic-tac-toe game written in Java and Spring Boot using Test Dri
 
 ## **How to build the application**
 
-1. Clone this repository `https://github.com/sandiparthiharish/tic-tac-toe.git`
+1. Clone this repository `https://github.com/Induja97/tic-tac-toe.git`
 2. You can build the project and run the tests by running `gradlew clean build`
 
 ## **How to run the application**
